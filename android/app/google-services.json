@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1056107004095",
+    "project_id": "sharelounge-7bbaf",
+    "storage_bucket": "sharelounge-7bbaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056107004095:android:2beba44d602ad1121a060a",
+        "android_client_info": {
+          "package_name": "com.example.ftkaiwai001_sharelounge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg-2jq1LqsUwk5drffo4qWv2aU2zysFIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
