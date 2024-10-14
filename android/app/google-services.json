@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1056107004095",
-    "project_id": "sharelounge-7bbaf",
-    "storage_bucket": "sharelounge-7bbaf.appspot.com"
+    "project_number": "966557527638",
+    "project_id": "sharelounge-a3153",
+    "storage_bucket": "sharelounge-a3153.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1056107004095:android:2beba44d602ad1121a060a",
+        "mobilesdk_app_id": "1:966557527638:android:7caaa3b25f734c4f1c15f7",
         "android_client_info": {
           "package_name": "com.example.ftkaiwai001_sharelounge"
         }
@@ -15,7 +15,26 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDg-2jq1LqsUwk5drffo4qWv2aU2zysFIE"
+          "current_key": "AIzaSyChO40gNl2K9TOiIHwOYJiEeQC-aWs11Z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966557527638:android:722234b45511611b1c15f7",
+        "android_client_info": {
+          "package_name": "com.sharelounge.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChO40gNl2K9TOiIHwOYJiEeQC-aWs11Z8"
         }
       ],
       "services": {
