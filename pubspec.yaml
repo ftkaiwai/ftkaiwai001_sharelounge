@@ -62,6 +62,6 @@ flutter:
     - images/key.jpg
 
   fonts:
-    - family: Schyler
+    - family: NotoSansJP
       fonts:
-        - asset: fonts/Schyler-Regular.ttf
+        - asset: fonts/NotoSansJP-Regular.ttf
