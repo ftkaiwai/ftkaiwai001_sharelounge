@@ -60,8 +60,9 @@ flutter:
 
   assets:
     - images/key.jpg
+    - icons/calendar_add.svg
 
   fonts:
     - family: Schyler
       fonts:
-        - asset: fonts/Schyler-Regular.ttf
+        - asset: fonts/NotoSansJP-Regular.ttf
