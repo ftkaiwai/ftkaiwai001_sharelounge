@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'register_page.dart'; // 新規登録ページのインポート
 
 class LoginPage extends StatefulWidget {
   @override
@@ -46,6 +47,16 @@ class _LoginPageState extends State<LoginPage> {
             ElevatedButton(
               onPressed: _login,
               child: Text('Login'),
+            ),
+            TextButton(
+              onPressed: () {
+                // 新規登録ページに遷移
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: Text('新規会員登録はこちら'),
             ),
           ],
         ),
