@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; // JSONデータの解析用
 
 void main() {
   runApp(MyApp());
@@ -21,32 +23,14 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            // 画面上部に横長のボックスを配置
+            // 天気データを表示するボックス
             Positioned(
               top: 80.0,
               left: 24.0,
               right: 24.0,
-              child: Container(
-                height: 80.0,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.6),
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '二子玉川',
-                    style: const TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'NotoSansJP',
-                    ),
-                  ),
-                ),
-              ),
+              child: WeatherBox(),
             ),
-            // 画面下部に横並びの3つのボックスを配置
+            // 画面下部のアイコンボックス
             Positioned(
               bottom: 100.0,
               left: 24.0,
@@ -57,17 +41,14 @@ class MyApp extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // 1つ目のボックス
                       _buildIconBox(
                         icon: Icons.event_seat,
                         label: '空席確認',
                       ),
-                      // 2つ目のボックス
                       _buildIconBox(
                         icon: Icons.calendar_month,
                         label: '予約',
                       ),
-                      // 3つ目のボックス
                       _buildIconBox(
                         icon: Icons.person,
                         label: 'マイページ',
@@ -83,7 +64,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  // アイコンとテキストを含むボックスを作成する関数
+  // アイコンボックスの関数
   Widget _buildIconBox({required IconData icon, required String label}) {
     return Container(
       width: 110,
@@ -100,7 +81,7 @@ class MyApp extends StatelessWidget {
             size: 50.0,
             color: Colors.blue,
           ),
-          SizedBox(height: 8.0), // アイコンとテキストの間隔
+          SizedBox(height: 8.0),
           Text(
             label,
             style: TextStyle(
@@ -108,6 +89,109 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// 天気データを表示するウィジェット
+class WeatherBox extends StatefulWidget {
+  @override
+  _WeatherBoxState createState() => _WeatherBoxState();
+}
+
+class _WeatherBoxState extends State<WeatherBox> {
+  String temperature = 'Loading...';
+  String weather = '';
+  String humidity = '';
+  String iconUrl = '';
+
+  @override
+  void initState() {
+    super.initState();
+    fetchWeather();
+  }
+
+  // 天気データを取得する関数
+  Future<void> fetchWeather() async {
+    final apiKey = '438c204d479f450f44fba4ac7558b0b6'; // OpenWeatherMapのAPIキー
+    final lat = 35.6115; // 二子玉川の緯度
+    final lon = 139.6317; // 二子玉川の経度
+    final url =
+        'https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$apiKey';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          temperature = '${data['main']['temp']}°C';
+          weather = data['weather'][0]['description'];
+          humidity = '${data['main']['humidity']}%';
+          iconUrl = 'http://openweathermap.org/img/wn/${data['weather'][0]['icon']}@2x.png';
+        });
+      } else {
+        setState(() {
+          temperature = 'Error';
+          weather = 'Error';
+          humidity = 'Error';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        temperature = 'Error';
+        weather = 'Error';
+        humidity = 'Error';
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '二子玉川',
+            style: const TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'NotoSansJP',
+            ),
+          ),
+          // 天気アイコン、気温、湿度を横並びに配置
+          Row(
+            children: [
+              // 天気アイコン
+              if (iconUrl.isNotEmpty)
+                Image.network(
+                  iconUrl,
+                  width: 30.0,
+                  height: 30.0,
+                ),
+              SizedBox(width: 8.0),
+              // 気温
+              Text(
+                '$temperature',
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width: 16.0),
+              // 湿度アイコンと湿度
+              Icon(Icons.water_drop, color: Colors.blue, size: 20.0),
+              SizedBox(width: 4.0),
+              Text(
+                '$humidity',
+                style: TextStyle(fontSize: 16.0),
+              ),
+            ],
           ),
         ],
       ),
